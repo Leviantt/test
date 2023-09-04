@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div>
+    <input id="number-input" type="text" placeholder="47"/>
+    <button id="number-btn">Number</button>
+    <pre id="number-result"></pre>
+</div>
+<div>
+    <input id="array-input" type="text" placeholder="2, 3, 4, 5, 30"/>
+    <button id="array-btn">Array</button>
+    <pre id="array-result"></pre>
+</div>
+<div>
+    <input id="range-input" type="text" placeholder="1.4, 16"/>
+    <button id="range-btn">Range</button>
+    <pre id="range-result"></pre>
+</div>
+<script>
+    const numberInput = document.getElementById('number-input');
+    const numberBtn = document.getElementById('number-btn');
+    const numberResult = document.getElementById('number-result');
+
+    const arrayInput = document.getElementById('array-input');
+    const arrayBtn = document.getElementById('array-btn');
+    const arrayResult = document.getElementById('array-result');
+
+    const rangeInput = document.getElementById('range-input');
+    const rangeBtn = document.getElementById('range-btn');
+    const rangeResult = document.getElementById('range-result');
+
+    async function onNumber() {
+        const response = await fetch('/number', {
+            method: 'POST',
+            body: JSON.stringify({number: numberInput.value})
+        })
+        const data = await response.json();
+        numberResult.textContent = data;
+    }
+
+    numberBtn.addEventListener('click', onNumber);
+
+    async function onArray() {
+        const response = await fetch('/array', {
+            method: 'POST',
+            body: JSON.stringify({array: arrayInput.value.split(',')})
+        })
+        const data = await response.json();
+        arrayResult.textContent = data;
+    }
+
+    arrayBtn.addEventListener('click', onArray);
+
+    async function onRange() {
+        const response = await fetch('/range', {
+            method: 'POST',
+            body: JSON.stringify({range: rangeInput.value.split(',')})
+        })
+        const data = await response.json();
+        rangeResult.textContent = data;
+    }
+
+    rangeBtn.addEventListener('click', onRange);
+</script>
+</body>
+</html>
